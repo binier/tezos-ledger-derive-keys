@@ -1,0 +1,19 @@
+diff --git a/node_modules/bs58check/index.js b/node_modules/bs58check/index.js
+index 347efec..0bfe598 100644
+--- a/node_modules/bs58check/index.js
++++ b/node_modules/bs58check/index.js
+@@ -1,12 +1,11 @@
+ 'use strict'
+ 
+-var createHash = require('create-hash')
++var sha256 = require('sha256');
+ var bs58checkBase = require('./base')
+ 
+ // SHA256(SHA256(buffer))
+ function sha256x2 (buffer) {
+-  var tmp = createHash('sha256').update(buffer).digest()
+-  return createHash('sha256').update(tmp).digest()
++  return Buffer.from(sha256.x2(buffer, { asBytes: true }));
+ }
+ 
+ module.exports = bs58checkBase(sha256x2)
